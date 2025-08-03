@@ -6,20 +6,14 @@ import {SubscriptionCardComponent} from './components/subscription-card/subscrip
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, SubscriptionCardComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'subscription-tracker-fe';
 
-  constructor(private subscriptionService: SubscriptionService) {}
+  constructor() {}
 
 
-  ngOnInit() {
-    console.log(1)
-    this.subscriptionService.getSubscriptions().subscribe((subs) => {
-      console.log(subs);
-    });
-  }
 }

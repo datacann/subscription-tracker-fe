@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Resolve} from '@angular/router';
 import {SubscriptionService} from '../services/subscription.service';
+import {Subscription} from '../models/subscription.model';
 
 @Injectable({
   providedIn: 'root',

@@ -22,12 +22,12 @@ export class SubscriptionAddComponent {
   form: FormGroup = this.fb.group({
     name: ['', Validators.required],
     price: ['', [Validators.required]],
-    date: ['', [Validators.required,]],
+    renewDate: ['', [Validators.required,]],
   });
 
   onSubmit() {
-    this.subscriptionService.addSubscription(this.subscription).subscribe((item) => {
-      this.subscription = {...item}
+    this.subscriptionService.addSubscription(this.form.value).subscribe((item) => {
+      this.subscription = item
       subscriptionsStore.add(item);
     } )
   }

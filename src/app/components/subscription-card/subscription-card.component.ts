@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, computed, Input, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, Input, OnInit, signal} from '@angular/core';
 import { Subscription } from '../../models/subscription.model';
 import {CurrencyPipe, DatePipe} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EditSubscriptionModalComponent} from '../edit-subscription-modal/edit-subscription-modal.component';
 import {subscriptionsStore} from '../../state/subscription.store';
 
@@ -17,11 +17,9 @@ import {subscriptionsStore} from '../../state/subscription.store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubscriptionCardComponent implements OnInit{
-  constructor(private route: ActivatedRoute) {
-
-  }
+  constructor(private route: ActivatedRoute) {}
   subscriptions = subscriptionsStore.state;
-
+  private router = inject(Router);
   isEditModalOpen = false;
   editForm: { name: string; price: number; renewDate: string; _id:string } = { name: '', price: 0, renewDate: '' , _id:"0"};
 
@@ -42,5 +40,9 @@ export class SubscriptionCardComponent implements OnInit{
   ngOnInit(): void {
     const data = this.route.snapshot.data['subscriptions'];
     subscriptionsStore.set(data);
+  }
+
+  navigateAdd(): void {
+    this.router.navigate(["/add"])
   }
 }

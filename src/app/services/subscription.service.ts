@@ -16,7 +16,7 @@ export class SubscriptionService {
   }
 
   addSubscription(data: Subscription): Observable<Subscription> {
-    return this.http.post<Subscription>(this.apiUrl, data);
+    return this.http.post<Subscription>(`${this.apiUrl}/add`, data);
   }
 
   updateSubscription(_id: string, data: Subscription): Observable<Subscription> {

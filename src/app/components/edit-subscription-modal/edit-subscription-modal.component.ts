@@ -30,10 +30,6 @@ export class EditSubscriptionModalComponent {
         this.isOpen = false;
 
       });
-    console.log(1)
-    console.log(this.subscription._id)
-    console.log('SUBMITTED DATA:', this.subscription);
-
   }
 
   onClose() {

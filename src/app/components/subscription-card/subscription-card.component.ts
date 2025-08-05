@@ -4,6 +4,7 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EditSubscriptionModalComponent} from '../edit-subscription-modal/edit-subscription-modal.component';
 import {subscriptionsStore} from '../../state/subscription.store';
+import { SubscriptionService } from '../../services/subscription.service';
 
 @Component({
   selector: 'app-subscription-card',
@@ -17,7 +18,7 @@ import {subscriptionsStore} from '../../state/subscription.store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubscriptionCardComponent implements OnInit{
-  constructor(private route: ActivatedRoute) {}
+constructor(private route: ActivatedRoute,private subscriptionService: SubscriptionService) {}
   subscriptions = subscriptionsStore.state;
   private router = inject(Router);
   isEditModalOpen = false;
@@ -44,5 +45,11 @@ export class SubscriptionCardComponent implements OnInit{
 
   navigateAdd(): void {
     this.router.navigate(["/add"])
+  }
+
+  removeSubs(id: string): void {
+    this.subscriptionService.deleteSubscription(id).subscribe(() => {
+      subscriptionsStore.remove(id);
+    });
   }
 }

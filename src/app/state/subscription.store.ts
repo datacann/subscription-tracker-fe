@@ -22,6 +22,9 @@ export const subscriptionsStore = {
     subscriptions.set(uniqueSubs);
   },
 
+  remove: (id: string) =>
+    subscriptions.update((subs) => subs.filter(sub => sub._id !== id))
+
 };
 
 

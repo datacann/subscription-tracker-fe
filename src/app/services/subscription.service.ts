@@ -22,4 +22,8 @@ export class SubscriptionService {
   updateSubscription(_id: string, data: Subscription): Observable<Subscription> {
     return this.http.put<Subscription>(`${this.apiUrl}/${_id}`, data);
   }
+
+  deleteSubscription(_id: string): Observable<Subscription> {
+    return this.http.delete<Subscription>(`${this.apiUrl}/${_id}`);
+  }
 }

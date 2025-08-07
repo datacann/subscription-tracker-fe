@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 import {FormsModule} from '@angular/forms';
 import {SubscriptionService} from '../../services/subscription.service';
 import {Subscription} from '../../models/subscription.model';
+import { take } from 'rxjs/operators';
+import { ToastService } from '../../services/toast.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ import {Subscription} from '../../models/subscription.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditSubscriptionModalComponent {
-  constructor(private subscriptionService: SubscriptionService) {}
+  constructor(private subscriptionService: SubscriptionService,private toastService : ToastService) {}
   @Input() isOpen = false;
   @Input() subscription!: Subscription;
 
@@ -22,15 +24,15 @@ export class EditSubscriptionModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Subscription>();
 
-  onSubmit() {
-    this.subscriptionService.updateSubscription(this.subscription._id, this.subscription)
-      .subscribe((updatedSub) => {
-        this.subscription = { ...updatedSub }
-        this.save.emit(this.subscription);
-        this.isOpen = false;
-
-      });
-  }
+onSubmit() {
+  this.subscriptionService.updateSubscription(this.subscription._id, this.subscription)
+    .pipe(take(1))
+    .subscribe((updatedSub) => {
+      this.subscription = { ...updatedSub };
+      this.save.emit(this.subscription);
+      this.isOpen = false;
+    });
+}
 
   onClose() {
     this.close.emit();

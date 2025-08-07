@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EditSubscriptionModalComponent} from '../edit-subscription-modal/edit-subscription-modal.component';
 import {subscriptionsStore} from '../../state/subscription.store';
 import { SubscriptionService } from '../../services/subscription.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-subscription-card',
@@ -18,7 +19,7 @@ import { SubscriptionService } from '../../services/subscription.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubscriptionCardComponent implements OnInit{
-constructor(private route: ActivatedRoute,private subscriptionService: SubscriptionService) {}
+constructor(private route: ActivatedRoute,private subscriptionService: SubscriptionService,private toastService : ToastService) {}
   subscriptions = subscriptionsStore.state;
   private router = inject(Router);
   isEditModalOpen = false;
@@ -50,6 +51,7 @@ constructor(private route: ActivatedRoute,private subscriptionService: Subscript
   removeSubs(id: string): void {
     this.subscriptionService.deleteSubscription(id).subscribe(() => {
       subscriptionsStore.remove(id);
+      this.toastService.success("Başarılı şekilde silindi")
     });
   }
 }
